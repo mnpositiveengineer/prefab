@@ -409,6 +409,61 @@ public class StepDefinition {
                 .calculateConcreteCostOfOnePiece(getElement(element)));
     }
 
+    @Then("Based on PCG {string} Concrete cost of all pieces of Element {string} is {int}")
+    public void concrete_cost_of_all_pieces(String pcg, String element, int amount) {
+        Assertions.assertEquals(amount, productionCosts.get(pcg).calculate()
+                .calculateConcreteCostOfAllPieces(getElement(element)));
+    }
+
+    @Then("Based on PCG {string} Steel cost of 1 piece of Element {string} is {int}")
+    public void steel_cost_of_one_pieces(String pcg, String element, int amount) {
+        Assertions.assertEquals(amount, productionCosts.get(pcg).calculate()
+                .calculateSteelCostOfOnePiece(getElement(element)));
+    }
+
+    @Then("Based on PCG {string} Steel cost of all pieces of Element {string} is {int}")
+    public void steel_cost_of_all_piecess(String pcg, String element, int amount) {
+        Assertions.assertEquals(amount, productionCosts.get(pcg).calculate()
+                .calculateSteelCostOfAllPieces(getElement(element)));
+    }
+
+    @Then("Based on PCG {string} Tension cost of 1 piece of Element {string} is {int}")
+    public void tension_cost_of_one_piece(String pcg, String element, int amount) {
+        Assertions.assertEquals(amount, productionCosts.get(pcg).calculate()
+                .calculateTensionCostOfOnePiece(getElement(element)));
+    }
+
+    @Then("Based on PCG {string} Tension cost of all pieces of Element {string} is {int}")
+    public void tension_cost_of_all_pieces(String pcg, String element, int amount) {
+        Assertions.assertEquals(amount, productionCosts.get(pcg).calculate()
+                .calculateTensionCostOfOAllPieces(getElement(element)));
+    }
+
+    @Then("Based on PCG {string} Framework cost of 1 piece of Element {string} is {int}")
+    public void framework_cost_of_one_piece(String pcg, String element, int amount) {
+        Assertions.assertEquals(amount, productionCosts.get(pcg).calculate()
+                .calculateFrameworkCostOfOnePiece(getElement(element)));
+    }
+
+    @Then("Based on PCG {string} Framework cost of all pieces of Element {string} is {int}")
+    public void framework_cost_of_all_pieces(String pcg, String element, int amount) {
+        Assertions.assertEquals(amount, productionCosts.get(pcg).calculate()
+                .calculateFrameworkCostOfAllPieces(getElement(element)));
+    }
+
+    @Then("Based on PCG {string} Labour and Energy cost of 1 piece of Element {string} is {int}")
+    public void labour_energy_cost_of_one_piece(String pcg, String element, int amount) {
+        Assertions.assertEquals(amount, productionCosts.get(pcg).calculate()
+                .calculateEnergyAndLabourCostsOfOnePiece(getElement(element)));
+    }
+
+    @Then("Based on PCG {string} Labour and Energy cost of all pieces of Element {string} is {int}")
+    public void labour_energy_cost_of_all_pieces(String pcg, String element, int amount) {
+        Assertions.assertEquals(amount, productionCosts.get(pcg).calculate()
+                .calculateEnergyAndLabourCostsOfAllPieces(getElement(element)));
+    }
+
+
 
 
 }

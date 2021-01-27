@@ -19,12 +19,8 @@ Feature: Production costs - creation and calculation
     - Tension cost od all pieces of element
     - Framework cost of 1 piece of element
     - Framework cost od all pieces of element
-    - Man hour cost of 1 piece of element
-    - Man hour cost od all pieces of element
-    - Energy cost of 1 piece of element
-    - Energy cost od all pieces of element
-    - Faculty cost of 1 piece of element
-    - Faculty cost od all pieces of element
+    - Energy and Labour cost (Man hour cost + energy cost + faculty cost) of 1 piece of element
+    - Energy and Labour cost (Man hour cost + energy cost + faculty cost) of all pieces of element
   4. User can specify multiply PCGs within a project, knowing that different elements have different
     costs of production.
 
@@ -40,19 +36,15 @@ Feature: Production costs - creation and calculation
     And Setting Tension of Customized Element "Beam" to 160
     And Setting Framework Area of Customized Element "Beam" to 25
     Then Based on PCG "pcg1" Concrete cost of 1 piece of Element "Beam" is 1500
-#    And Based on PCG "pcg1" Concrete cost of all pieces of Element "Column" is 15000
-#    And Based on PCG "pcg1" Steel cost of 1 piece of Element "Column" is 1050
-#    And Based on PCG "pcg1"Steel cost of all pieces of Element "Column" is 10500
-#    And Based on PCG "pcg1" Tension cost of 1 piece of Element "Column" is 656
-#    And Based on PCG "pcg1" Tension cost of all pieces of Element "Column" is 6560
-#    And Based on PCG "pcg1" Framework cost of 1 piece of Element "Column" is 2250
-#    And Based on PCG "pcg1" Framework cost of all pieces of Element "Column" is 22500
-#    And Based on PCG "pcg1" Man hour cost of 1 piece of Element "Column" is 250
-#    And Based on PCG "pcg1" Man hour cost of all pieces of Element "Column" is 2500
-#    And Based on PCG "pcg1" Energy cost of 1 piece of Element "Column" is 300
-#    And Based on PCG "pcg1" Energy cost of all pieces of Element "Column" is 3000
-#    And Based on PCG "pcg1" Faculty cost of 1 piece of Element "Column" is 400
-#    And Based on PCG "pcg1" Faculty cost of all pieces of Element "Column" is 4000
+    And Based on PCG "pcg1" Concrete cost of all pieces of Element "Beam" is 15000
+    And Based on PCG "pcg1" Steel cost of 1 piece of Element "Beam" is 1050
+    And Based on PCG "pcg1" Steel cost of all pieces of Element "Beam" is 10500
+    And Based on PCG "pcg1" Tension cost of 1 piece of Element "Beam" is 656
+    And Based on PCG "pcg1" Tension cost of all pieces of Element "Beam" is 6560
+    And Based on PCG "pcg1" Framework cost of 1 piece of Element "Beam" is 2250
+    And Based on PCG "pcg1" Framework cost of all pieces of Element "Beam" is 22500
+    And Based on PCG "pcg1" Labour and Energy cost of 1 piece of Element "Beam" is 950
+    And Based on PCG "pcg1" Labour and Energy cost of all pieces of Element "Beam" is 9500
 
 
 
