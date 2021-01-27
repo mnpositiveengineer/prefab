@@ -89,6 +89,25 @@ public class StepDefinition {
         elements.add(new StandardElement(name, amount, name));
     }
 
+    @Given("Following Standard Elements are created")
+    public void standard_elements_are_created(io.cucumber.datatable.DataTable dataTable) {
+        for (int i =0; i < dataTable.asMaps().size(); i++) {
+            String name = dataTable.asMaps().get(i).get("name");
+            int amount = Integer.parseInt(dataTable.asMaps().get(i).get("amount"));
+            float height = Float.parseFloat(dataTable.asMaps().get(i).get("height"));
+            float width = Float.parseFloat(dataTable.asMaps().get(i).get("width"));
+            float length = Float.parseFloat(dataTable.asMaps().get(i).get("length"));
+            int steel = Integer.parseInt(dataTable.asMaps().get(i).get("steel"));
+            int tension = Integer.parseInt(dataTable.asMaps().get(i).get("tension"));
+            elements.add(new StandardElement(name, amount, name));
+            getElement(name).setHeight(height);
+            getElement(name).setWidth(width);
+            getElement(name).setLength(length);
+            getElement(name).setSteelSaturation(steel);
+            getElement(name).setTensionSaturation(tension);
+        }
+    }
+
     @Given("Console Element of name {string} and amount {short} is created")
     public void console_element_is_created(String name, short amount) {
         elements.add(new ConsoleElement(name, amount, name));
@@ -393,6 +412,11 @@ public class StepDefinition {
         getProject(project).addElement(getElement(element));
     }
 
+    @When("Element {string} is removed from Project {string}")
+    public void removing_element_from_project(String element, String project) {
+        getProject(project).removeElement(getElement(element));
+    }
+
     @Then("Project {string} has {short} Element(s)")
     public void project_has_elements(String project, short amount) {
         Assertions.assertEquals(amount, getProject(project).getElements().size());
@@ -463,6 +487,13 @@ public class StepDefinition {
                 .calculateEnergyAndLabourCostsOfAllPieces(getElement(element)));
     }
 
+    @When("Following Standard Elements are assigned to Project {string}")
+    public void following_standard_elements_are_assigned_to_project(String project,
+                                                                    io.cucumber.datatable.DataTable dataTable) {
+        for (String name : dataTable.asList())
+        getProject(project).addElement(getElement(name));
+
+    }
 
 
 

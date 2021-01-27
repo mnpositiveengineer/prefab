@@ -13,6 +13,9 @@ Feature: Project creation and modification
     - Is Design Included (True/False)
     - Project Status (Received|In_progress|Offer_sent|Discarded|Approved)
   3. User should be able to add created elements to Project (Standard Elements, Console Elements, Customized Elements)
+  4. User should be able to remove created elements from Project.
+
+  Rule: User should be able to specify attributes of Projects presented in Acceptance Criteria
 
   Scenario: Creating Project and modifying data
     Given Prospect "Testing Company" is created
@@ -33,7 +36,9 @@ Feature: Project creation and modification
     When Changing Name of Project "Testing" to "Building"
     Then Name of Project "Building" is "Building"
 
-    Scenario: Adding Elements to a Project
+    Rule: User should be able to add Elements to Project and remove Elements from Project
+
+    Scenario: Adding Elements to a Project and removing Elements from Project
       Given Prospect "Testing Company" is created
       And Project "Testing" is created for Prospect "Testing Company"
       And Standard Element of name "Column" and amount 10 is created
@@ -45,4 +50,11 @@ Feature: Project creation and modification
       Then Project "Testing" has 2 Elements
       When Element "Slab" is assigned to Project "Testing"
       Then Project "Testing" has 3 Elements
+      When Element "Column" is removed from Project "Testing"
+      Then Project "Testing" has 2 Elements
+      When Element "Beam" is removed from Project "Testing"
+      Then Project "Testing" has 1 Elements
+      When Element "Slab" is removed from Project "Testing"
+      Then Project "Testing" has 0 Elements
+
 

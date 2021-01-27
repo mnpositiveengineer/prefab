@@ -15,6 +15,8 @@ Feature: Prospect creation and modification
     And Person Of Contact "Second Person" is created
     And Address "Second Address" is created
 
+    Rule: User should be able to add to Prospect and remove from Prospect multiple Persons of Contact and Addresses
+
   Scenario: Adding and removing Person Of Contact and Address
     When Adding Person Of Contact "First Person" to Prospect "Testing"
       And Adding Address "First Address" to Prospect "Testing"
@@ -32,6 +34,8 @@ Feature: Prospect creation and modification
       And Removing Address "Second Address" from Prospect "Testing"
     Then Prospect "Testing" has 0 Person Of Contact
       And Prospect "Testing" has 0 Address
+
+  Rule: User should be able to set and modify Prospect's data
 
   Scenario: Modifying Prospect's data
     When Setting Principal Activity of Prospect "Testing" to "Testing activity"
