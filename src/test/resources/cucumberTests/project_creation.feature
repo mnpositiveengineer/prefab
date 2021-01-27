@@ -12,6 +12,7 @@ Feature: Project creation and modification
     - Client Type (Investor|General|Subcontractor)
     - Is Design Included (True/False)
     - Project Status (Received|In_progress|Offer_sent|Discarded|Approved)
+  3. User should be able to add created elements to Project (Standard Elements, Console Elements, Customized Elements)
 
   Scenario: Creating Project and modifying data
     Given Prospect "Testing Company" is created
@@ -31,3 +32,17 @@ Feature: Project creation and modification
     Then Status of Project "Testing" is Received
     When Changing Name of Project "Testing" to "Building"
     Then Name of Project "Building" is "Building"
+
+    Scenario: Adding Elements to a Project
+      Given Prospect "Testing Company" is created
+      And Project "Testing" is created for Prospect "Testing Company"
+      And Standard Element of name "Column" and amount 10 is created
+      And Customized Element of name "Beam" and amount 2 is created
+      And Console Element of name "Slab" and amount 4 is created
+      When Element "Column" is assigned to Project "Testing"
+      Then Project "Testing" has 1 Element
+      When Element "Beam" is assigned to Project "Testing"
+      Then Project "Testing" has 2 Elements
+      When Element "Slab" is assigned to Project "Testing"
+      Then Project "Testing" has 3 Elements
+

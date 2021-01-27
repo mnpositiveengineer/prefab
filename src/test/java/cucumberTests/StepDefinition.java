@@ -14,7 +14,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
+
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class StepDefinition {
@@ -25,7 +28,7 @@ public class StepDefinition {
     private Set<Project> projects = new HashSet<>();
     private Set<StandardElement> elements = new HashSet<>();
     private Set<Accessory> accessories = new HashSet<>();
-    private Set<Production> productionCosts = new HashSet<>();
+    private Map<String, Production> productionCosts = new HashMap<>();
 
     private Prospect getProspect(String prospect) {
         return prospects.stream().filter(m -> m.getName().equals(prospect)).findAny()
@@ -94,6 +97,13 @@ public class StepDefinition {
     @Given("Customized Element of name {string} and amount {short} is created")
     public void customized_element_is_created(String name, short amount) {
         elements.add(new CustomizedElement(name, amount, name));
+    }
+
+    @Given("PCG {string}: concrete cost = {int}, steel cost = {float}, tension cost = {float}, framework cost = {int}, man hour cost = {int}, energy cost = {int}, faculty cost = {int}; for Project {string} is created")
+    public void setting_pcg(String name, int concrete, float steel, float tension,
+                            int framework, int manHour, int energy, int faculty, String project) {
+        productionCosts.put(name,
+                new Production(getProject(project), concrete, steel, tension, framework, manHour, energy, faculty));
     }
 
     @When("Adding Person Of Contact {string} to Prospect {string}")
@@ -373,19 +383,31 @@ public class StepDefinition {
         customizedElement.setFrameworkArea(framework);
     }
 
-    @When("PCG: concrete cost = {int}, steel cost = {float}, tension cost = {float}, framework cost = {int}, man hour cost = {int}, energy cost = {int}, faculty cost = {int}; for Project {string} is created")
-    public void setting_pcg(int concrete, float steel, float tension,
-                            int framework, int manHour, int energy, int faculty, String project) {
-        productionCosts.add(
-                new Production(getProject(project), concrete, steel, tension, framework, manHour, energy, faculty));
-    }
-
     @Then("Project {string} has {short} PCG(s)")
     public void project_has_pcg(String project, short amount) {
         Assertions.assertEquals(amount, getProject(project).getProductionGroups().size());
-
     }
 
+    @When("Element {string} is assigned to Project {string}")
+    public void assigning_element_to_project(String element, String project) {
+        getProject(project).addElement(getElement(element));
+    }
+
+    @Then("Project {string} has {short} Element(s)")
+    public void project_has_elements(String project, short amount) {
+        Assertions.assertEquals(amount, getProject(project).getElements().size());
+    }
+
+    @When("Element {string} is assigned to PCG {string}")
+    public void assigning_element_to_pcg(String element, String pcg) {
+        productionCosts.get(pcg).addSelectedElementsToGroup(getElement(element));
+    }
+
+    @Then("Based on PCG {string} Concrete cost of 1 piece of Element {string} is {int}")
+    public void concrete_cost_of_one_piece(String pcg, String element, int amount) {
+        Assertions.assertEquals(amount, productionCosts.get(pcg).calculate()
+                .calculateConcreteCostOfOnePiece(getElement(element)));
+    }
 
 
 
