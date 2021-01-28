@@ -10,6 +10,7 @@ import com.prefab.sales.production.ConsoleElement;
 import com.prefab.sales.production.CustomizedElement;
 import com.prefab.sales.production.StandardElement;
 import com.prefab.sales.utils.enums.*;
+import io.cucumber.java.Transpose;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -89,8 +90,8 @@ public class StepDefinition {
         elements.add(new StandardElement(name, amount, name));
     }
 
-    @Given("Following Standard Elements are created")
-    public void standard_elements_are_created(io.cucumber.datatable.DataTable dataTable) {
+    @Given("Following {string} Elements are created")
+    public void elements_are_created(String type, io.cucumber.datatable.DataTable dataTable) {
         for (int i =0; i < dataTable.asMaps().size(); i++) {
             String name = dataTable.asMaps().get(i).get("name");
             int amount = Integer.parseInt(dataTable.asMaps().get(i).get("amount"));
@@ -99,7 +100,14 @@ public class StepDefinition {
             float length = Float.parseFloat(dataTable.asMaps().get(i).get("length"));
             int steel = Integer.parseInt(dataTable.asMaps().get(i).get("steel"));
             int tension = Integer.parseInt(dataTable.asMaps().get(i).get("tension"));
-            elements.add(new StandardElement(name, amount, name));
+
+            if (type.equals("Standard"))
+                elements.add(new StandardElement(name, amount, name));
+            else if (type.equals("Console"))
+                elements.add(new ConsoleElement(name, amount, name));
+            else if (type.equals("Customized"))
+                elements.add(new CustomizedElement(name, amount, name));
+
             getElement(name).setHeight(height);
             getElement(name).setWidth(width);
             getElement(name).setLength(length);
@@ -487,7 +495,7 @@ public class StepDefinition {
                 .calculateEnergyAndLabourCostsOfAllPieces(getElement(element)));
     }
 
-    @When("Following Standard Elements are assigned to Project {string}")
+    @When("Following Elements are assigned to Project {string}")
     public void following_standard_elements_are_assigned_to_project(String project,
                                                                     io.cucumber.datatable.DataTable dataTable) {
         for (String name : dataTable.asList())
