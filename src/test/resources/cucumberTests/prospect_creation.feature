@@ -8,16 +8,14 @@ Feature: Prospect creation and modification
     - Tax ID
     - Name
 
-  Background:
-    Given Prospect "Testing" is created
-    And Person Of Contact "First Person" is created
-    And Address "First Address" is created
-    And Person Of Contact "Second Person" is created
-    And Address "Second Address" is created
-
     Rule: User should be able to add to Prospect and remove from Prospect multiple Persons of Contact and Addresses
 
   Scenario: Adding and removing Person Of Contact and Address
+    Given Prospect "Testing" is created
+      And Person Of Contact "First Person" is created
+      And Address "First Address" is created
+      And Person Of Contact "Second Person" is created
+      And Address "Second Address" is created
     When Adding Person Of Contact "First Person" to Prospect "Testing"
       And Adding Address "First Address" to Prospect "Testing"
     Then Prospect "Testing" has 1 Person Of Contact
@@ -38,6 +36,11 @@ Feature: Prospect creation and modification
   Rule: User should be able to set and modify Prospect's data
 
   Scenario: Modifying Prospect's data
+    Given Prospect "Testing" is created
+      And Person Of Contact "First Person" is created
+      And Address "First Address" is created
+      And Person Of Contact "Second Person" is created
+      And Address "Second Address" is created
     When Setting Principal Activity of Prospect "Testing" to "Testing activity"
     Then Principal Activity of Prospect "Testing" is set to "Testing activity"
     When Setting Tax ID of Prospect "Testing" to "123456789"

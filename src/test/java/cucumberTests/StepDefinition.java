@@ -415,6 +415,11 @@ public class StepDefinition {
         Assertions.assertEquals(amount, getProject(project).getProductionGroups().size());
     }
 
+    @Then("PCG {string} has {short} Element(s)")
+    public void pcg_has_elements(String pcg, short amount) {
+        Assertions.assertEquals(amount, productionCosts.get(pcg).getElementsInGroup().size());
+    }
+
     @When("Element {string} is assigned to Project {string}")
     public void assigning_element_to_project(String element, String project) {
         getProject(project).addElement(getElement(element));
@@ -496,13 +501,28 @@ public class StepDefinition {
     }
 
     @When("Following Elements are assigned to Project {string}")
-    public void following_standard_elements_are_assigned_to_project(String project,
+    public void following_elements_are_assigned_to_project(String project,
                                                                     io.cucumber.datatable.DataTable dataTable) {
         for (String name : dataTable.asList())
         getProject(project).addElement(getElement(name));
-
     }
 
+    @When("All Elements from Project are assigned to PCG {string}")
+    public void all_elements_from_project_are_assigned_to_pcg(String pcg) {
+        productionCosts.get(pcg).addAllElementsToGroup();
+    }
 
+    @When("Following Elements are assigned to PCG {string}")
+    public void following_elements_are_assigned_to_pcg(String pcg,
+                                                           @Transpose io.cucumber.datatable.DataTable dataTable) {
+        for (String name : dataTable.asList())
+            productionCosts.get(pcg).addSelectedElementsToGroup(getElement(name));
+    }
+
+    @When("Following Element(s) are/is removed from PCG {string}")
+    public void removing_elements_from_pcg(String pcg, @Transpose io.cucumber.datatable.DataTable dataTable) {
+        for (String name : dataTable.asList())
+            productionCosts.get(pcg).removeSelectedElementsFromGroup(getElement(name));
+    }
 
 }
