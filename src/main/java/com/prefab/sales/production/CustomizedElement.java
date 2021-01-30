@@ -2,7 +2,7 @@ package com.prefab.sales.production;
 
 import com.prefab.sales.production.interfaces.CalculateElement;
 
-public class CustomizedElement extends ConsoleElement {
+public class CustomizedElement extends StandardElement {
 
     private float volume;
     private float area;
@@ -85,7 +85,7 @@ public class CustomizedElement extends ConsoleElement {
         return new CustomizedCalculateElementCalculator(this);
     }
 
-    public class CustomizedCalculateElementCalculator extends ConsoleCalculator {
+    public class CustomizedCalculateElementCalculator extends Calculator {
 
         private CustomizedElement element;
 
