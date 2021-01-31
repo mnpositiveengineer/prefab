@@ -61,6 +61,22 @@ public class StepDefinition {
                 .get();
     }
 
+    private String getStringFromDataTable(Map<String, String> map, String columnName) {
+        return map.get(columnName);
+    }
+
+    private Float getFloatFromDataTable(Map<String, String> map, String columnName) {
+        return Float.parseFloat(map.get(columnName));
+    }
+
+    private Short getShortFromDataTable(Map<String, String> map, String columnName) {
+        return Short.parseShort(map.get(columnName));
+    }
+
+    private Integer getIntegerFromDataTable(Map<String, String> map, String columnName) {
+        return Integer.parseInt(map.get(columnName));
+    }
+
 
     @Given("Prospect {string} is created")
     public void prospect_is_created(String name) {
@@ -92,14 +108,14 @@ public class StepDefinition {
 
     @Given("Following {string} Elements are created")
     public void elements_are_created(String type, io.cucumber.datatable.DataTable dataTable) {
-        for (int i =0; i < dataTable.asMaps().size(); i++) {
-            String name = dataTable.asMaps().get(i).get("name");
-            int amount = Integer.parseInt(dataTable.asMaps().get(i).get("amount"));
-            float height = Float.parseFloat(dataTable.asMaps().get(i).get("height"));
-            float width = Float.parseFloat(dataTable.asMaps().get(i).get("width"));
-            float length = Float.parseFloat(dataTable.asMaps().get(i).get("length"));
-            int steel = Integer.parseInt(dataTable.asMaps().get(i).get("steel"));
-            int tension = Integer.parseInt(dataTable.asMaps().get(i).get("tension"));
+        for (Map<String, String> map : dataTable.asMaps()) {
+            String name = getStringFromDataTable(map, "name");
+            int amount = getIntegerFromDataTable(map, "amount");
+            float height = getFloatFromDataTable(map, "height");
+            float width = getFloatFromDataTable(map, "width");
+            float length = getFloatFromDataTable(map, "length");
+            int steel = getIntegerFromDataTable(map, "steel");
+            int tension = getIntegerFromDataTable(map, "tension");
 
             if (type.equals("Standard"))
                 elements.add(new StandardElement(name, amount, name));
@@ -116,6 +132,31 @@ public class StepDefinition {
         }
     }
 
+    @Given("Creating Customized Element(s) of attributes")
+    public void customized_elements_are_created(io.cucumber.datatable.DataTable dataTable) {
+
+        for (Map<String, String> map : dataTable.asMaps()) {
+            String name = getStringFromDataTable(map, "name");
+            int amount = getIntegerFromDataTable(map, "amount");
+            float volume = getFloatFromDataTable(map, "volume");
+            float area = getFloatFromDataTable(map, "area");
+            float weight = getFloatFromDataTable(map, "weight");
+            float frameworkArea = getFloatFromDataTable(map, "framework");
+            float steelWeight = getFloatFromDataTable(map, "steel");
+            float tensionWeight = getFloatFromDataTable(map, "tension");
+
+            CustomizedElement element = new CustomizedElement(name, amount, name);
+            element.setVolume(volume);
+            element.setArea(area);
+            element.setWeight(weight);
+            element.setTensionWeight(tensionWeight);
+            element.setSteelWeight(steelWeight);
+            element.setFrameworkArea(frameworkArea);
+
+            elements.add(element);
+        }
+    }
+
     @Given("Console Element of name {string} and amount {short} is created")
     public void console_element_is_created(String name, short amount) {
         elements.add(new ConsoleElement(name, amount, name));
@@ -126,11 +167,21 @@ public class StepDefinition {
         elements.add(new CustomizedElement(name, amount, name));
     }
 
-    @Given("PCG {string}: concrete cost = {int}, steel cost = {float}, tension cost = {float}, framework cost = {int}, man hour cost = {int}, energy cost = {int}, faculty cost = {int}; for Project {string} is created")
-    public void setting_pcg(String name, int concrete, float steel, float tension,
-                            int framework, int manHour, int energy, int faculty, String project) {
-        productionCosts.put(name,
-                new Production(getProject(project), concrete, steel, tension, framework, manHour, energy, faculty));
+    @Given("PCG(s) of following cost(s) is/are created for Project {string}")
+    public void setting_pcg(String project, io.cucumber.datatable.DataTable dataTable) {
+        for (Map<String, String> map : dataTable.asMaps()) {
+            String pcgName = getStringFromDataTable(map, "name_of_pcg");
+            int concreteCost = getIntegerFromDataTable(map, "concrete_cost");
+            float steelCost = getFloatFromDataTable(map, "steel_cost");
+            float tensionCost = getFloatFromDataTable(map, "tension_cost");
+            int frameworkCost = getIntegerFromDataTable(map, "framework_cost");
+            int manHourCost = getIntegerFromDataTable(map, "man_hour_cost");
+            int energyCost = getIntegerFromDataTable(map, "energy_cost");
+            int facultyCost = getIntegerFromDataTable(map, "faculty_cost");
+            productionCosts.put(pcgName,
+                    new Production(getProject(project), concreteCost, steelCost, tensionCost,
+                    frameworkCost, manHourCost, energyCost, facultyCost));
+        }
     }
 
     @When("Adding Person Of Contact {string} to Prospect {string}")
