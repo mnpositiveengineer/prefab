@@ -5,6 +5,7 @@ import com.prefab.sales.client.PersonOfContact;
 import com.prefab.sales.client.Project;
 import com.prefab.sales.client.Prospect;
 import com.prefab.sales.cost.Production;
+import com.prefab.sales.cost.Transport;
 import com.prefab.sales.production.Accessory;
 import com.prefab.sales.production.ConsoleElement;
 import com.prefab.sales.production.CustomizedElement;
@@ -30,6 +31,7 @@ public class StepDefinition {
     private Set<StandardElement> elements = new HashSet<>();
     private Set<Accessory> accessories = new HashSet<>();
     private Map<String, Production> productionCosts = new HashMap<>();
+    private Map<String, Transport> transportCosts = new HashMap<>();
 
     private Prospect getProspect(String prospect) {
         return prospects.stream().filter(m -> m.getName().equals(prospect)).findAny()
@@ -180,7 +182,17 @@ public class StepDefinition {
             int facultyCost = getIntegerFromDataTable(map, "faculty_cost");
             productionCosts.put(pcgName,
                     new Production(getProject(project), concreteCost, steelCost, tensionCost,
-                    frameworkCost, manHourCost, energyCost, facultyCost));
+                            frameworkCost, manHourCost, energyCost, facultyCost));
+        }
+    }
+
+    @Given("TCG(s) of following cost(s) is/are created for Project {string}")
+    public void setting_tcg(String project, io.cucumber.datatable.DataTable dataTable) {
+        for (Map<String, String> map : dataTable.asMaps()) {
+            String tcgName = getStringFromDataTable(map, "name_of_tcg");
+            int transportCost = getIntegerFromDataTable(map, "cost_of_one_transport");
+            transportCosts.put(tcgName,
+                    new Transport(getProject(project), transportCost));
         }
     }
 
@@ -575,5 +587,41 @@ public class StepDefinition {
         for (String name : dataTable.asList())
             productionCosts.get(pcg).removeSelectedElementsFromGroup(getElement(name));
     }
+
+    @When("All Elements from Project are assigned to TCG {string}")
+    public void all_elements_from_project_are_assigned_to_tcg(String tcg) {
+        transportCosts.get(tcg).addAllElementsToGroup();
+    }
+
+    @Then("Project {string} has {short} TCGs")
+    public void project_has_tcg(String project, short amount) {
+        Assertions.assertEquals(amount, getProject(project).getTransportGroups().size());
+    }
+
+    @Then("TCG {string} has {short} Elements")
+    public void tcg_has_elements(String tcg, short amount) {
+        Assertions.assertEquals(amount, transportCosts.get(tcg).getElementsInGroup().size());
+    }
+
+    @Then("Total weight of elements in TCG {string} is {int}")
+    public void total_weight_of_elements_in_tcg(String tcg, int amount) {
+        Assertions.assertEquals(amount, transportCosts.get(tcg).calculate().calculateTotalWeightOfElementsInGroup());
+    }
+
+    @Then("Number of transports for TCG {string} is {short}")
+    public void number_of_transports_in_tcg(String tcg, short amount) {
+        Assertions.assertEquals(amount, transportCosts.get(tcg).calculate().calculateNumberOfCTransportsInGroup());
+    }
+
+    @Then("Cost of transport of elements in TCG {string} is {int}")
+    public void cost_of_transport_of_elements_in_tcg(String tcg, int amount) {
+        Assertions.assertEquals(amount, transportCosts.get(tcg).calculate().calculateCostOfTransportInGroup());
+    }
+
+    @When("Setting maximum load of one transport in TCG {string} to {short}")
+    public void all_elements_from_project_are_assigned_to_tcg(String tcg, short load) {
+        transportCosts.get(tcg).setMaxCarLoadInTones(load);
+    }
+
 
 }
