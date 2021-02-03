@@ -598,7 +598,7 @@ public class StepDefinition {
         Assertions.assertEquals(amount, getProject(project).getTransportGroups().size());
     }
 
-    @Then("TCG {string} has {short} Elements")
+    @Then("TCG {string} has {short} Element(s)")
     public void tcg_has_elements(String tcg, short amount) {
         Assertions.assertEquals(amount, transportCosts.get(tcg).getElementsInGroup().size());
     }
@@ -621,6 +621,19 @@ public class StepDefinition {
     @When("Setting maximum load of one transport in TCG {string} to {short}")
     public void all_elements_from_project_are_assigned_to_tcg(String tcg, short load) {
         transportCosts.get(tcg).setMaxCarLoadInTones(load);
+    }
+
+    @When("Following Elements are assigned to TCG {string}")
+    public void following_elements_are_assigned_to_tcg(String tcg,
+                                                       @Transpose io.cucumber.datatable.DataTable dataTable) {
+        for (String name : dataTable.asList())
+            transportCosts.get(tcg).addSelectedElementsToGroup(getElement(name));
+    }
+
+    @When("Following Element(s) are/is removed from TCG {string}")
+    public void removing_elements_from_tcg(String tcg, @Transpose io.cucumber.datatable.DataTable dataTable) {
+        for (String name : dataTable.asList())
+            transportCosts.get(tcg).removeSelectedElementsFromGroup(getElement(name));
     }
 
 

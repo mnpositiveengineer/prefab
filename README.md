@@ -1,7 +1,7 @@
 <h3>Application to create an offer for selling precast concrete elements</h3>
 
 <ul>
-<li><b>142</b> Unit Tests (JUnit5) and Acceptance Tests (Cucumber)</li>
+<li><b>143</b> Unit Tests (JUnit5) and Acceptance Tests (Cucumber)</li>
 <li><b>89%</b> test method coverage</li>
 </ul>
 

@@ -68,6 +68,23 @@ Feature: Creation and calculation of transport costs
         And Number of transports for TCG "tcg1" is 9
         And Cost of transport of elements in TCG "tcg1" is 27000
 
+      Rule: For elements assigned to Project user can specify one TCG or multiply TCGs
 
-
-
+      Scenario: Assigning elements to multiple TCGs in Project
+        Given Creating Customized Element of attributes
+          |name   |amount|volume|area|weight|steel|tension|framework|
+          |Beam1  |10    |5     |10  |15    |300  |160    |25       |
+          |Beam2  |10    |5     |10  |15    |300  |160    |25       |
+        And TCG of following cost is created for Project "Testing"
+          |name_of_tcg|cost_of_one_transport|
+          |tcg1       |3000                 |
+          |tcg2       |6000                 |
+        When Following Elements are assigned to Project "Testing"
+          |Beam1|Beam2|
+        And Following Elements are assigned to TCG "tcg1"
+          |Beam1|
+        And Following Elements are assigned to TCG "tcg2"
+          |Beam2|
+        Then Project "Testing" has 2 TCGs
+        And TCG "tcg1" has 1 Element
+        And TCG "tcg2" has 1 Element
