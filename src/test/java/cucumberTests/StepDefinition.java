@@ -4,6 +4,7 @@ import com.prefab.sales.client.Address;
 import com.prefab.sales.client.PersonOfContact;
 import com.prefab.sales.client.Project;
 import com.prefab.sales.client.Prospect;
+import com.prefab.sales.cost.Assembly;
 import com.prefab.sales.cost.Production;
 import com.prefab.sales.cost.Transport;
 import com.prefab.sales.production.Accessory;
@@ -32,6 +33,7 @@ public class StepDefinition {
     private Set<Accessory> accessories = new HashSet<>();
     private Map<String, Production> productionCosts = new HashMap<>();
     private Map<String, Transport> transportCosts = new HashMap<>();
+    private Map<String, Assembly> assemblyCosts = new HashMap<>();
 
     private Prospect getProspect(String prospect) {
         return prospects.stream().filter(m -> m.getName().equals(prospect)).findAny()
@@ -196,6 +198,16 @@ public class StepDefinition {
         }
     }
 
+    @Given("ACG(s) of following cost(s) is/are created for Project {string}")
+    public void setting_acg(String project, io.cucumber.datatable.DataTable dataTable) {
+        for (Map<String, String> map : dataTable.asMaps()) {
+            String acgName = getStringFromDataTable(map, "name_of_acg");
+            int assemblyCost = getIntegerFromDataTable(map, "assembly_cost_one_element");
+            assemblyCosts.put(acgName,
+                    new Assembly(getProject(project), assemblyCost));
+        }
+    }
+
     @When("Adding Person Of Contact {string} to Prospect {string}")
     public void adding_person_of_contact_to_prospect(String person, String prospect) {
         getProspect(prospect).addPersonOfContactToProspect(getPerson(person));
@@ -326,7 +338,6 @@ public class StepDefinition {
     public void project_name_is_changed(String project, String name) {
         Assertions.assertEquals(name, getProject(project).getName());
     }
-
 
     @When("Setting amount of Element {string} to {short}")
     public void setting_amount_of_standard_element_to(String name, short amount) {
@@ -603,6 +614,16 @@ public class StepDefinition {
         Assertions.assertEquals(amount, transportCosts.get(tcg).getElementsInGroup().size());
     }
 
+    @Then("Project {string} has {short} ACGs")
+    public void project_has_acg(String project, short amount) {
+        Assertions.assertEquals(amount, getProject(project).getAssemblyGroups().size());
+    }
+
+    @Then("ACG {string} has {short} Element(s)")
+    public void acg_has_elements(String tcg, short amount) {
+        Assertions.assertEquals(amount, assemblyCosts.get(tcg).getElementsInGroup().size());
+    }
+
     @Then("Total weight of elements in TCG {string} is {int}")
     public void total_weight_of_elements_in_tcg(String tcg, int amount) {
         Assertions.assertEquals(amount, transportCosts.get(tcg).calculate().calculateTotalWeightOfElementsInGroup());
@@ -616,6 +637,11 @@ public class StepDefinition {
     @Then("Cost of transport of elements in TCG {string} is {int}")
     public void cost_of_transport_of_elements_in_tcg(String tcg, int amount) {
         Assertions.assertEquals(amount, transportCosts.get(tcg).calculate().calculateCostOfTransportInGroup());
+    }
+
+    @Then("Assembly cost of elements in ACG {string} is {int}")
+    public void cost_of_assembly_of_elements_in_acg(String tcg, int amount) {
+        Assertions.assertEquals(amount, assemblyCosts.get(tcg).calculate().calculateCostOfAssemblyInGroup());
     }
 
     @When("Setting maximum load of one transport in TCG {string} to {short}")
@@ -634,6 +660,19 @@ public class StepDefinition {
     public void removing_elements_from_tcg(String tcg, @Transpose io.cucumber.datatable.DataTable dataTable) {
         for (String name : dataTable.asList())
             transportCosts.get(tcg).removeSelectedElementsFromGroup(getElement(name));
+    }
+
+    @When("Following Elements are assigned to ACG {string}")
+    public void following_elements_are_assigned_to_acg(String acg,
+                                                       @Transpose io.cucumber.datatable.DataTable dataTable) {
+        for (String name : dataTable.asList())
+            assemblyCosts.get(acg).addSelectedElementsToGroup(getElement(name));
+    }
+
+    @When("Following Element(s) are/is removed from ACG {string}")
+    public void removing_elements_from_acg(String acg, @Transpose io.cucumber.datatable.DataTable dataTable) {
+        for (String name : dataTable.asList())
+            assemblyCosts.get(acg).removeSelectedElementsFromGroup(getElement(name));
     }
 
 

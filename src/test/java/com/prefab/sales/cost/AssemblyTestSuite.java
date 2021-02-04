@@ -30,16 +30,16 @@ class AssemblyTestSuite {
 
     @Test
     void ShouldCalculateAssemblyCostOfGroups() {
-        Assertions.assertEquals(2000, assembly1.calculate().calculateCostOfAssemblyInGroup());
-        Assertions.assertEquals(2000, assembly2.calculate().calculateCostOfAssemblyInGroup());
+        Assertions.assertEquals(9000, assembly1.calculate().calculateCostOfAssemblyInGroup());
+        Assertions.assertEquals(12000, assembly2.calculate().calculateCostOfAssemblyInGroup());
     }
 
     @Test
     void ShouldCalculateAssemblyCostOfGroupsAfterPriceIsChanged() {
         assembly1.setAssemblyCost(500);
         assembly2.setAssemblyCost(600);
-        Assertions.assertEquals(1000, assembly1.calculate().calculateCostOfAssemblyInGroup());
-        Assertions.assertEquals(600, assembly2.calculate().calculateCostOfAssemblyInGroup());
+        Assertions.assertEquals(4500, assembly1.calculate().calculateCostOfAssemblyInGroup());
+        Assertions.assertEquals(3600, assembly2.calculate().calculateCostOfAssemblyInGroup());
     }
 
 }

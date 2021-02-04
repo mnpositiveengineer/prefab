@@ -95,7 +95,7 @@ class ProjectCostCalculatorTestSuite {
 
     @Test
     void ShouldCalculateAllAssemblyCostsOfProject() {
-        Assertions.assertEquals(4000, project.calculate().calculateAllAssemblyCostsOfProject());
+        Assertions.assertEquals(21000, project.calculate().calculateAllAssemblyCostsOfProject());
     }
 
 

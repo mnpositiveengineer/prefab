@@ -14,5 +14,5 @@
 <p><a href = "src\test\resources\cucumberTests\customized_element_creator.feature">6. Creation and calculation of customized element</a></p>
 <p><a href = "src\test\resources\cucumberTests\production_cost.feature">7. Creation and calculation of production costs</a></p>
 <p><a href = "src\test\resources\cucumberTests\transport_cost.feature">8. Creation and calculation of transport costs</a></p>
-<p>9. Creation and calculation of assembly costs</p>
+<p><a href = "src\test\resources\cucumberTests\assembly_cost.feature">9. Creation and calculation of assembly costs</a></p>
 <p>10. Creation and calculation of whole project costs</p>

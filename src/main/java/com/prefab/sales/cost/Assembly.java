@@ -58,7 +58,7 @@ public class Assembly extends CostGroupsCreator {
         public int calculateCostOfAssemblyInGroup() {
             if (this.assembly.getElementsInGroup().isEmpty())
                 return 0;
-            return assembly.getElementsInGroup().size() * assemblyCost;
+            return assembly.getElementsInGroup().stream().mapToInt(m->m.getAmount()).sum() * assemblyCost;
         }
     }
 }
