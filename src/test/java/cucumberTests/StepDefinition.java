@@ -6,6 +6,7 @@ import com.prefab.sales.client.Project;
 import com.prefab.sales.client.Prospect;
 import com.prefab.sales.cost.Assembly;
 import com.prefab.sales.cost.Production;
+import com.prefab.sales.cost.ProjectCostCalculator;
 import com.prefab.sales.cost.Transport;
 import com.prefab.sales.production.Accessory;
 import com.prefab.sales.production.ConsoleElement;
@@ -586,7 +587,7 @@ public class StepDefinition {
         productionCosts.get(pcg).addAllElementsToGroup();
     }
 
-    @When("Following Elements are assigned to PCG {string}")
+    @When("Following Element(s) are/is assigned to PCG {string}")
     public void following_elements_are_assigned_to_pcg(String pcg,
                                                            @Transpose io.cucumber.datatable.DataTable dataTable) {
         for (String name : dataTable.asList())
@@ -602,6 +603,11 @@ public class StepDefinition {
     @When("All Elements from Project are assigned to TCG {string}")
     public void all_elements_from_project_are_assigned_to_tcg(String tcg) {
         transportCosts.get(tcg).addAllElementsToGroup();
+    }
+
+    @When("All Elements from Project are assigned to ACG {string}")
+    public void all_elements_from_project_are_assigned_to_acg(String acg) {
+        assemblyCosts.get(acg).addAllElementsToGroup();
     }
 
     @Then("Project {string} has {short} TCGs")
@@ -649,7 +655,7 @@ public class StepDefinition {
         transportCosts.get(tcg).setMaxCarLoadInTones(load);
     }
 
-    @When("Following Elements are assigned to TCG {string}")
+    @When("Following Element(s) are/is assigned to TCG {string}")
     public void following_elements_are_assigned_to_tcg(String tcg,
                                                        @Transpose io.cucumber.datatable.DataTable dataTable) {
         for (String name : dataTable.asList())
@@ -662,7 +668,7 @@ public class StepDefinition {
             transportCosts.get(tcg).removeSelectedElementsFromGroup(getElement(name));
     }
 
-    @When("Following Elements are assigned to ACG {string}")
+    @When("Following Element(s) are assigned to ACG {string}")
     public void following_elements_are_assigned_to_acg(String acg,
                                                        @Transpose io.cucumber.datatable.DataTable dataTable) {
         for (String name : dataTable.asList())
@@ -673,6 +679,17 @@ public class StepDefinition {
     public void removing_elements_from_acg(String acg, @Transpose io.cucumber.datatable.DataTable dataTable) {
         for (String name : dataTable.asList())
             assemblyCosts.get(acg).removeSelectedElementsFromGroup(getElement(name));
+    }
+
+    @When("All Elements are removed from ACG {string}")
+    public void removing_all_elements_from_acg(String acg) {
+            assemblyCosts.get(acg).removeAllElementsFromGroup();
+    }
+
+    @Then("Production cost of Project {string} is {int}")
+    public void production_cost_of_project(String project, int cost) {
+        ProjectCostCalculator calculator = new ProjectCostCalculator(getProject(project));
+        Assertions.assertEquals(cost, calculator.calculateAllProductionCostsOfProject());
     }
 
 

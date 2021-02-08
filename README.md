@@ -1,7 +1,7 @@
 <h3>Application to create an offer for selling precast concrete elements</h3>
 
 <ul>
-<li><b>143</b> Unit Tests (JUnit5) and Acceptance Tests (Cucumber)</li>
+<li><b>150</b> Unit Tests (JUnit5) and Acceptance Tests (Cucumber)</li>
 <li><b>89%</b> test method coverage</li>
 </ul>
 
@@ -15,4 +15,4 @@
 <p><a href = "src\test\resources\cucumberTests\production_cost.feature">7. Creation and calculation of production costs</a></p>
 <p><a href = "src\test\resources\cucumberTests\transport_cost.feature">8. Creation and calculation of transport costs</a></p>
 <p><a href = "src\test\resources\cucumberTests\assembly_cost.feature">9. Creation and calculation of assembly costs</a></p>
-<p>10. Creation and calculation of whole project costs</p>
+<p><a href = "src\test\resources\cucumberTests\project_cost.feature">10. Creation and calculation of whole project costs</a></p>
