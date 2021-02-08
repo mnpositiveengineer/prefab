@@ -668,7 +668,7 @@ public class StepDefinition {
             transportCosts.get(tcg).removeSelectedElementsFromGroup(getElement(name));
     }
 
-    @When("Following Element(s) are assigned to ACG {string}")
+    @When("Following Element(s) are/is assigned to ACG {string}")
     public void following_elements_are_assigned_to_acg(String acg,
                                                        @Transpose io.cucumber.datatable.DataTable dataTable) {
         for (String name : dataTable.asList())
@@ -690,6 +690,18 @@ public class StepDefinition {
     public void production_cost_of_project(String project, int cost) {
         ProjectCostCalculator calculator = new ProjectCostCalculator(getProject(project));
         Assertions.assertEquals(cost, calculator.calculateAllProductionCostsOfProject());
+    }
+
+    @Then("Transport cost of Project {string} is {int}")
+    public void transport_cost_of_project(String project, int cost) {
+        ProjectCostCalculator calculator = new ProjectCostCalculator(getProject(project));
+        Assertions.assertEquals(cost, calculator.calculateAllTransportCostsOfProject());
+    }
+
+    @Then("Assembly cost of Project {string} is {int}")
+    public void assembly_cost_of_project(String project, int cost) {
+        ProjectCostCalculator calculator = new ProjectCostCalculator(getProject(project));
+        Assertions.assertEquals(cost, calculator.calculateAllAssemblyCostsOfProject());
     }
 
 
