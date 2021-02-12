@@ -39,4 +39,5 @@ dependencies {
     testImplementation("io.cucumber:cucumber-junit-platform-engine:latest.release")
     testImplementation("io.cucumber:cucumber-picocontainer:latest.release")
     testCompile("org.junit.jupiter:junit-jupiter-params:5.7.0")
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.23'
 }
