@@ -23,6 +23,9 @@ public class Address {
     @Column(name = "country")
     private String country;
 
+    public Address() {
+    }
+
     public Address(String address, String city, String postalCode, String country) {
         setAddress(address);
         setCity(city);

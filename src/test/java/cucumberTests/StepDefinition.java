@@ -715,11 +715,18 @@ public class StepDefinition {
         Assertions.assertEquals(cost, calculator.calculateAllAssemblyCostsOfProject());
     }
 
+    @Given("All addresses are removed from database")
+    public void all_addresses_are_removed_from_database() {
+        addressRepository.deleteAll();
+    }
+
     @When("User clicks on SAVE")
     public void user_clicks_on_save() {
         for (Address address : addresses)
         addressRepository.save(address);
     }
+
+
 
 
 }

@@ -25,6 +25,7 @@ public class DatabaseStepDefinition {
             Statement statement = dbManager.getConnection().createStatement();
             int number_of_addresses = statement.executeQuery("SELECT * FROM prefab_sales.addresses").getRow();
             Assertions.assertEquals(amount, number_of_addresses);
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

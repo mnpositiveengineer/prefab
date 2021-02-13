@@ -4,6 +4,11 @@ Feature: Saving to Database
   1. User can save all created data to database.
   2. User can retrieve all data from database.
 
+  Background: Clear all data from database
+    Given All addresses are removed from database
+    Then 0 Addresses are saved in database
+
+
   Scenario: Creating Addresses and saving to database
     Given Address "First Address" is created
     And Address "Second Address" is created
