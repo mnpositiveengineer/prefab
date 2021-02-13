@@ -2,13 +2,25 @@ package com.prefab.sales.client;
 
 import com.prefab.sales.utils.Validation;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+@Entity
+@Table(name = "addresses")
 public class Address {
-
+    @Id
+    @GeneratedValue
+    @NotNull
+    @Column(name = "id", unique = true)
+    private int id;
+    @Column(name = "address")
     private String address;
+    @Column(name = "city")
     private String city;
+    @Column(name = "postal_code")
     private String postalCode;
+    @Column(name = "country")
     private String country;
 
     public Address(String address, String city, String postalCode, String country) {

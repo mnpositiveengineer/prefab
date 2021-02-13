@@ -4,6 +4,7 @@ import com.prefab.sales.client.Address;
 import com.prefab.sales.client.PersonOfContact;
 import com.prefab.sales.client.Project;
 import com.prefab.sales.client.Prospect;
+import com.prefab.sales.client.repositories.AddressRepository;
 import com.prefab.sales.cost.Assembly;
 import com.prefab.sales.cost.Production;
 import com.prefab.sales.cost.ProjectCostCalculator;
@@ -18,16 +19,26 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class StepDefinition {
 
     private Set<Prospect> prospects = new HashSet<>();
     private Set<PersonOfContact> personOfContacts = new HashSet<>();
+
+    @Autowired
+    private AddressRepository addressRepository;
+
     private Set<Address> addresses = new HashSet<>();
     private Set<Project> projects = new HashSet<>();
     private Set<StandardElement> elements = new HashSet<>();
@@ -702,6 +713,12 @@ public class StepDefinition {
     public void assembly_cost_of_project(String project, int cost) {
         ProjectCostCalculator calculator = new ProjectCostCalculator(getProject(project));
         Assertions.assertEquals(cost, calculator.calculateAllAssemblyCostsOfProject());
+    }
+
+    @When("User clicks on SAVE")
+    public void user_clicks_on_save() {
+        for (Address address : addresses)
+        addressRepository.save(address);
     }
 
 

@@ -14,7 +14,7 @@ public class DbManager {
         Properties connectionProps = new Properties();
         connectionProps.put("user", "prefab_app");
         connectionProps.put("password", "prefabapp");
-        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/prefab_project_app", connectionProps);
+        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/prefab_sales", connectionProps);
     }
 
     public static DbManager getInstance() throws SQLException {

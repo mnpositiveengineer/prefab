@@ -1,15 +1,16 @@
 package cucumberTests;
 
+import com.prefab.sales.client.repositories.AddressRepository;
+import com.prefab.sales.database.DbManager;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.jupiter.api.Assertions;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DatabaseStepDefinition {
-
-    @When("User clicks on SAVE")
-    public void user_clicks_on_save() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
 
     @Then("{int} Person(s) Of Contact is/are saved in database")
     public void persons_of_contact_are_saved_in_database(Integer int1) {
@@ -17,10 +18,16 @@ public class DatabaseStepDefinition {
         throw new io.cucumber.java.PendingException();
     }
 
-    @Then("{int} Address(es) is/are saved in database")
-    public void addresses_are_saved_in_database(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    @Then("{short} Address(es) is/are saved in database")
+    public void addresses_are_saved_in_database(short amount) {
+        try {
+            DbManager dbManager = DbManager.getInstance();
+            Statement statement = dbManager.getConnection().createStatement();
+            int number_of_addresses = statement.executeQuery("SELECT * FROM prefab_sales.addresses").getRow();
+            Assertions.assertEquals(amount, number_of_addresses);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Then("{int} Prospect(s) is/are saved in database")
