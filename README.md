@@ -3,7 +3,7 @@
 <ul>
 <li><b>169</b> Unit Tests and Acceptance Tests </li>
 <li><b>89%</b> test method coverage</li>
-<li>Stack: Java 11 | PL/SQL | Libraries: Junit5 | Cucumber | Hibernate</li>
+<li>Stack: Java 11 | PL/SQL | Libraries: Junit5, Cucumber, Hibernate</li>
 </ul>
 
 <p>Selling module consists of following features. Acceptance Criteria along with Test Cases are provided in feature files:</p>
