@@ -25,13 +25,23 @@ CREATE TABLE IF NOT EXISTS Prospects (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
     name VARCHAR(100) NOT NULL
     CHECK (name REGEXP '^[A-Za-z0-9 ąĄćĆęĘłŁńŃóÓśŚźŹżŻåÅØøæÆäÄöÖüÜß/,\.\'\-]*$'),
-    address INT UNSIGNED,
     principal_activity VARCHAR(100),
     tax VARCHAR(30)
-    CHECK (tax REGEXP '^[A-Z0-9]{1,26}$'),
-    FOREIGN KEY (address) REFERENCES Addresses (id)
+    CHECK (tax REGEXP '^[A-Z0-9]{1,26}$')
+) CHARACTER SET utf8;
+
+DROP TABLE IF EXISTS ProspectsAddresses; 
+
+CREATE TABLE IF NOT EXISTS ProspectsAddresses (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
+    prospect_id INT UNSIGNED NOT NULL,
+    address_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (prospect_id) REFERENCES Prospects (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+	FOREIGN KEY (address_id) REFERENCES Addresses (id)
     ON DELETE RESTRICT
-    ON UPDATE CASCADE
+    ON UPDATE RESTRICT
 ) CHARACTER SET utf8;
 
 DROP TABLE IF EXISTS PersonOfContacts;

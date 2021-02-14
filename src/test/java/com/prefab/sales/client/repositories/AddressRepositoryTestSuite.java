@@ -38,4 +38,25 @@ class AddressRepositoryTestSuite {
         addressRepository.save(address);
         Assertions.assertEquals(1, addressRepository.count());
     }
+
+    @Test
+    public void ShouldRemoveAddressFromDatabase() {
+        Address address = new Address("Test", "Test", "00-000", "Testing");
+        addressRepository.save(address);
+        Assertions.assertEquals(1, addressRepository.count());
+        addressRepository.delete(address);
+        Assertions.assertEquals(0, addressRepository.count());
+    }
+
+    @Test
+    public void ShouldNotDuplicateAddressesInDatabase() {
+        Address address = new Address("Test", "Test", "00-000", "Testing");
+        addressRepository.save(address);
+        Assertions.assertEquals(1, addressRepository.count());
+        addressRepository.save(address);
+        Assertions.assertEquals(1, addressRepository.count());
+    }
+
+
+
 }

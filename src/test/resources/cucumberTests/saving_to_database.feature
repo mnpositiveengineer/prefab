@@ -8,7 +8,6 @@ Feature: Saving to Database
     Given All addresses are removed from database
     Then 0 Addresses are saved in database
 
-
   Scenario: Creating Addresses and saving to database
     Given Address "First Address" is created
     And Address "Second Address" is created
@@ -46,26 +45,30 @@ Feature: Saving to Database
 #    And User clicks on SAVE
 #    Then As per database Tax ID of Prospect "Testing" is "123456789"
 #    And As per database Principal Activity of Prospect "Testing" is "Testing activity"
-#    When Setting Tax ID of Prospect "Testing" to "123456788"
-#    And Setting Principal Activity of Prospect "Testing" to "Building activity"
 #
-#  Scenario: Assigning Person of Contact to Prospect and saving to database
+#  Scenario: Assigning two Persons of Contact to Prospect and saving to database
 #    Given Person Of Contact "John Smith" is created
+#    And Person Of Contact "Brad Pit" is created
 #    And Prospect "Building" is created
 #    When Adding Person Of Contact "John Smith" to Prospect "Building"
+#    And Adding Person Of Contact "Brad Pit" to Prospect "Building"
 #    And User clicks on SAVE
-#    Then 1 Person Of Contact is saved in database
+#    Then 2 Person Of Contact is saved in database
 #    And 1 Prospect is saved in database
 #    And As per database "John Smith" is a Person of Contact for Prospect "Building"
+#    And As per database "Brad Pit" is a Person of Contact for Prospect "Building"
 #
 #  Scenario: Assigning Address to Prospect and saving to database
 #    Given Address "First Address" is created
+#    And Address "Second Address" is created
 #    And Prospect "Building" is created
 #    When Adding Address "First Address" to Prospect "Building"
+#    And Adding Address "Second Address" to Prospect "Building"
 #    And User clicks on SAVE
-#    Then 1 Address is saved in database
+#    Then 2 Address is saved in database
 #    And 1 Prospect is saved in database
 #    And As per database "First Address" is Address for Prospect "Building"
+#    And As per database "Second Address" is Address for Prospect "Building"
 #
 #  Scenario: Removing Person of Contact from Prospect and saving to database
 #    Given Person Of Contact "John Smith" is created

@@ -4,17 +4,35 @@ import com.prefab.sales.utils.CollectionModification;
 import com.prefab.sales.utils.Validation;
 import com.prefab.sales.utils.exceptions.ObjectAlreadyAddedException;
 import com.prefab.sales.utils.exceptions.ObjectNotInCollectionException;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
+@Table(name = "prospects")
 public class Prospect {
 
+    @Id
+    @GeneratedValue
+    @NotNull
+    @Column(name = "id", unique = true)
+    private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "principal_activity")
     private String principalActivity;
+    @Transient
     private Set<Address> addresses = new HashSet<>();
+    @OneToMany (targetEntity = PersonOfContact.class, mappedBy = "prospect",
+            cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private Set<PersonOfContact> personOfContacts = new HashSet<>();
+    @Column(name = "tax")
     private String tax;
 
+    public Prospect() {
+    }
 
     public Prospect(String name) {
         setName(name);
