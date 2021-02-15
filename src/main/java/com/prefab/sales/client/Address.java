@@ -4,7 +4,9 @@ import com.prefab.sales.utils.Validation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "addresses")
@@ -22,6 +24,10 @@ public class Address {
     private String postalCode;
     @Column(name = "country")
     private String country;
+    @Transient
+    @OneToMany (targetEntity = ProspectAddress.class, mappedBy = "address",
+            cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<ProspectAddress> prospectAddresses = new HashSet<>();
 
     public Address() {
     }

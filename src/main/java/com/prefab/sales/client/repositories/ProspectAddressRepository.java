@@ -1,6 +1,6 @@
 package com.prefab.sales.client.repositories;
 
-import com.prefab.sales.client.Prospect;
+import com.prefab.sales.client.ProspectAddress;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,6 +8,5 @@ import javax.transaction.Transactional;
 
 @Repository
 @Transactional
-public interface ProspectRepository extends CrudRepository<Prospect, Integer> {
-    Prospect findByName(String name);
+public interface ProspectAddressRepository extends CrudRepository<ProspectAddress, Integer> {
 }

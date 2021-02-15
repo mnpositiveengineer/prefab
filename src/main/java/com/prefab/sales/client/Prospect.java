@@ -25,9 +25,13 @@ public class Prospect {
     private String principalActivity;
     @Transient
     private Set<Address> addresses = new HashSet<>();
+    @Transient
+    @OneToMany (targetEntity = ProspectAddress.class, mappedBy = "prospect",
+            cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<ProspectAddress> prospectAddresses = new HashSet<>();
     @OneToMany (targetEntity = PersonOfContact.class, mappedBy = "prospect",
             cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    private Set<PersonOfContact> personOfContacts = new HashSet<>();
+        private Set<PersonOfContact> personOfContacts = new HashSet<>();
     @Column(name = "tax")
     private String tax;
 
@@ -62,6 +66,7 @@ public class Prospect {
         for (Address address : selectedAddresses) {
             try {
                 CollectionModification.addToCollection(addresses, address);
+                prospectAddresses.add(new ProspectAddress());
             } catch (ObjectAlreadyAddedException e) {
                 System.out.println("Address is already on the list.");
             }
@@ -111,5 +116,9 @@ public class Prospect {
 
     public String getTax() {
         return tax;
+    }
+
+    public Set<ProspectAddress> getProspectAddresses() {
+        return prospectAddresses;
     }
 }

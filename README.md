@@ -1,7 +1,7 @@
 <h3>Application to create an offer for selling precast concrete elements</h3>
 
 <ul>
-<li><b>169</b> Unit Tests and Acceptance Tests </li>
+<li><b>171</b> Unit Tests and Acceptance Tests </li>
 <li><b>89%</b> test method coverage</li>
 <li>Stack: Java 11 | PL/SQL | Libraries: Junit5, Cucumber, Hibernate</li>
 </ul>
